@@ -17,7 +17,7 @@ auradrop is a smart price tracker web app that monitors products across online s
 
 **Made with ❤️ by Mbuyelo Mich**
 
-[🚀 Live Demo](https://auradrop.vercel.app) • [📖 Documentation](#-setup-instructions) • [🐛 Report Bug](https://github.com/MbuyeloMich/auradrop/issues)
+[🚀 Live Demo](https://auradropp.vercel.app/) • [📖 Documentation](#-setup-instructions) • [🐛 Report Bug](https://github.com/MbuyeloMich/auradrop/issues)
 
 </div>
 
