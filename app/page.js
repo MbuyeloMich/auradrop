@@ -7,27 +7,12 @@ import AuthButton from "@/components/AuthButton";
 import ThemeToggle from "@/components/ThemeToggle";
 import QuotesRotator from "@/components/QuotesRotator";
 import Image from "next/image";
-
-function isValidHttpUrl(value) {
-  if (!value || value === "undefined" || value === "null") {
-    return false;
-  }
-
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
+import { supabaseConfig } from "@/utils/supabase/config";
 
 export default async function Home() {
   let user = null;
 
-  if (
-    isValidHttpUrl(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  ) {
+  if (supabaseConfig.isConfigured) {
     const supabase = await createClient();
     const {
       data: { user: resolvedUser },

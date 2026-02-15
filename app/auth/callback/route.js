@@ -1,28 +1,13 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-
-function isValidHttpUrl(value) {
-  if (!value || value === "undefined" || value === "null") {
-    return false;
-  }
-
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
+import { supabaseConfig } from "@/utils/supabase/config";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/";
 
-  if (
-    !isValidHttpUrl(process.env.NEXT_PUBLIC_SUPABASE_URL) ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  ) {
+  if (!supabaseConfig.isConfigured) {
     return NextResponse.redirect(new URL("/error?reason=supabase_config", request.url));
   }
 

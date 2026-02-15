@@ -11,26 +11,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-function isValidHttpUrl(value) {
-  if (!value || value === "undefined" || value === "null") {
-    return false;
-  }
-
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
+import { isValidHttpUrl, supabaseConfig } from "@/utils/supabase/config";
 
 export default function AuthModal({ isOpen, onClose }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const isAuthConfigured =
-    isValidHttpUrl(supabaseUrl) && Boolean(supabaseAnonKey);
+  const isAuthConfigured = supabaseConfig.isConfigured;
 
   const handleGoogleLogin = async () => {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -83,11 +68,6 @@ export default function AuthModal({ isOpen, onClose }) {
         </DialogHeader>
 
         <div className="flex flex-col gap-4 py-4">
-          {!isAuthConfigured && (
-            <p className="text-sm text-amber-600">
-              Google sign-in is disabled until Supabase keys are set in .env.local.
-            </p>
-          )}
           <Button
             onClick={handleGoogleLogin}
             variant="outline"
