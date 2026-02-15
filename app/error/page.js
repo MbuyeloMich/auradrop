@@ -1,0 +1,33 @@
+import Link from "next/link";
+
+const ERROR_MESSAGES = {
+  supabase_config:
+    "Google sign-in is not configured. Add valid Supabase credentials in .env.local.",
+  oauth_exchange:
+    "Google sign-in could not be completed. Check Supabase Auth redirect URL settings and try again.",
+  missing_code: "Google sign-in callback is missing required authorization data.",
+};
+
+export default function ErrorPage({ searchParams }) {
+  const reason = searchParams?.reason;
+  const message =
+    ERROR_MESSAGES[reason] ||
+    "Sorry, there was an error during authentication. Please try again.";
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+        <h1 className="text-2xl font-bold text-red-600 mb-4">
+          Authentication Error
+        </h1>
+        <p className="text-gray-600 mb-6">{message}</p>
+        <Link
+          href="/"
+          className="inline-block bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
+        >
+          Back to Home
+        </Link>
+      </div>
+    </div>
+  );
+}
