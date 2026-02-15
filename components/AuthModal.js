@@ -11,23 +11,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { isValidHttpUrl, supabaseConfig } from "@/utils/supabase/config";
+import { isValidHttpUrl } from "@/utils/supabase/config";
 
 export default function AuthModal({ isOpen, onClose }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const isAuthConfigured = supabaseConfig.isConfigured;
 
   const handleGoogleLogin = async () => {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-
-    if (!isAuthConfigured) {
-      toast.error("Google sign-in is not configured yet.", {
-        description:
-          "Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local.",
-      });
-      return;
-    }
-
     const callbackBaseUrl = isValidHttpUrl(appUrl) ? appUrl : window.location.origin;
 
     try {
@@ -73,7 +63,7 @@ export default function AuthModal({ isOpen, onClose }) {
             variant="outline"
             className="w-full gap-2"
             size="lg"
-            disabled={isSigningIn || !isAuthConfigured}
+            disabled={isSigningIn}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
